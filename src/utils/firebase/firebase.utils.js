@@ -14,8 +14,17 @@ import {
     getFirestore,
     doc,
     getDoc,
-    setDoc,
+    setDoc,    
+
+    //UPLOAD DATA FOR DEV
+    collection,
+    writeBatch,
+    query,
+    getDocs,
 } from 'firebase/firestore';
+
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCmSeuX_Vx89Qhqd7ynBFMZXu5VTyuDbc0",
@@ -86,3 +95,36 @@ export const signOutUser = async () => {
 }
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+// UPLOAD DATA FOR DEV
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach(object => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+
+        batch.set(docRef, object);
+    });
+
+    await batch.commit();
+
+    console.log('Added collection and documents');
+};
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((previousVal, currentVal) => {
+        const {title, items} = currentVal.data();
+
+        previousVal[title.toLowerCase()] = items;
+
+        return previousVal;
+    }, {})
+
+    return categoryMap;
+};

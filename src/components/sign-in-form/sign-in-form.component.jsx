@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {  signInWithGooglePopup,  signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
-import './sign-in-form.styles.scss';
+import './sign-in-form.styles';
+import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
 
 const defaultFormFields = {
     email: "",
@@ -10,17 +11,6 @@ const defaultFormFields = {
   };
 
 const SignInForm = () => {
-  // useEffect(() => {
-  //   const getGoogleRedirectResult = async () => {
-  //     const response = await getRedirectResult(auth);
-
-  //     if (response) {
-  //       const userDocRef = await createUserDocumentFromAuth(response.user);
-  //     }
-  //   };
-
-  //   getGoogleRedirectResult();
-  // });
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -59,7 +49,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-in-container">
+    <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
 
@@ -82,19 +72,19 @@ const SignInForm = () => {
           value={password}
         />
 
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type="submit">Sign in</Button>
           <Button
             onClick={signInWithGoogle}
-            buttonType={"google"}
+            buttonType={BUTTON_TYPE_CLASSES.google}
             type="button"
           >
             Google Sign In
           </Button>
           {/*<button onClick={signInWithGoogleRedirect}>Sign in with Google Redirect</button>*/}
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
