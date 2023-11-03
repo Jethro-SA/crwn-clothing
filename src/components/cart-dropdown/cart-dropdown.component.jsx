@@ -4,7 +4,7 @@ import "./cart-dropdown.styles";
 import { useNavigate } from "react-router-dom";
 import { CartDropdownContainer, CartItems, EmptyMessage } from "./cart-dropdown.styles";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartOpen } from "../../store/cart/cart.action";
+import { setCartOpen } from "../../store/cart/cart.reducer";
 import { selectCartItems } from "../../store/cart/cart.selector";
 
 const CartDropdown = () => {
