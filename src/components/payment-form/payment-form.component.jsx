@@ -12,7 +12,7 @@ const PaymentForm = () => {
     const amount = useSelector(selectCartTotal);
     const currentUser = useSelector(selectCurrentUser);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-  
+    
     const paymentHandler = async (e) => {
       e.preventDefault();
       if (!stripe || !elements) {
@@ -35,7 +35,7 @@ const PaymentForm = () => {
         payment_method: {
           card: elements.getElement(CardElement),
           billing_details: {
-            name: currentUser ? currentUser.displayName : 'Yihua Zhang',
+            name: currentUser ? currentUser.displayName : 'Guest',
           },
         },
       });
